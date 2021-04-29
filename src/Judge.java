@@ -25,23 +25,28 @@ public class Judge {
         init(trust);
         print(m);
         int judge = -1;
-        for(int j = 0; j < N; j++){// trust[i][j] means does i trust j? 1 = yes
 
+        for(int j = 0; j < N; j++){// trust[i][j] means does i trust j? 1 = yes
             for(int i =0; i < N; i++){// does every i trust this j?
                 if(i != j)//exception case: i doesn't need to trust itself
                 {
-                    if(m[i][j] != 1)//then j is not trusted by i{
-                        break;//move on to next
+                    judge = j+1;
+                    if(m[i][j] != 1) {//then j is not trusted by i{
+                        judge = -1;
+                        break;//move on to next j
+                    }
 
                 }
             }
-            judge = j +1;
+
             if(judge != -1){//now check if judge trusts anyone
                for(int l = 0; l<N; l++){
-                   if(m[judge-1][l] == 1)//if the judge trusts anyone it is not the judge anymore
+                   if(m[judge-1][l] == 1) {//if the judge trusts anyone it is not the judge anymore
                        judge = -1;
+                       break;
+                   }
+                   return judge;
                }
-
             }
         }
 
